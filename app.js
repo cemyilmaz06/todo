@@ -15,9 +15,9 @@ app.use(express.json())
 
 require('express-async-errors')
 
-app.all('/', (req, res) => {
-    res.send('WELCOME TO TODO API')
-})
+// app.all('/', (req, res) => {
+//     res.send('WELCOME TO TODO API')
+// })
 
 
 //*SEQUELİZE
@@ -75,9 +75,60 @@ const Todo = sequelize.define('todos', {
 
 // sequelize.sync()
 // sequelize.sync({force: true})
-sequelize.sync({alter: true})
+// sequelize.sync({alter: true})
 
 
+sequelize.authenticate()
+.then(()=> console.log('*DB Connected*'))
+.catch(()=> console.log('*DB Not Connected'));
+
+
+//ROUTER
+const router = express.Router()
+
+
+
+//List Todo
+
+router.get('/', async(req, res) =>{
+// const data = await Todo.findAll()
+// const data = await Todo.findAll({
+//     attributes: ['title', 'description', 'priority'],
+//     where: {priority: -1}
+// })
+
+const data = await Todo.findAndCountAll()
+
+
+res.status(200).send({
+    error: false,
+    result: data
+})
+})
+
+router.post('/' , async(req, res) =>{
+// const receiveData = req.body
+// console.log(receiveData);
+
+// const data = await Todo.create({
+    //     title: receivedData.title,
+    //     description: receivedData.description,
+    //     priority: receivedData.priority,
+    //     isDone: receivedData.isDone
+    // })
+
+    // const data = await Todo.create(req.body)
+
+    // res.status(201).send({
+    //     error: false,
+    //     result: data
+
+    // })
+})
+
+
+
+app.use(router)
 
 
 // continue from here...
