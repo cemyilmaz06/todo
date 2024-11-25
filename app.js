@@ -26,7 +26,55 @@ app.all('/', (req, res) => {
 const {Sequelize,  DataTypes} = require('sequelize')
 
 // const sequelize = new Sequelize('sqlite:./db.sqlite3')
-const sequelize = new Sequelize('sqlite:' + (processenv.SQLITE || './db.sqlite3'))
+const sequelize = new Sequelize('sqlite:' + (process.env.SQLITE || './db.sqlite3'))
+
+
+//Model
+//sequelize.define('taboName', {tableDetails})
+
+const Todo = sequelize.define('todos', {
+
+    // id: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   unique: true,
+    //   comment: 'description',
+    //   primaryKey: true,
+    //   autoIncrement: true,
+    //   field: 'custom_name',
+    //   defaultValue: 0
+    // },
+
+
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+
+    // description: {
+    //     type: DataTypes.TEXT,
+       
+    // },
+    description: DataTypes.TEXT,
+
+    priority: {
+        type: DataTypes.TINYINT,
+        allowNull: false,
+        defaultValue: 0
+
+    },
+
+    isDone: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    },
+
+
+})
+
+
+
 
 // continue from here...
 
