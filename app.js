@@ -19,6 +19,15 @@ app.all('/', (req, res) => {
     res.send('WELCOME TO TODO API')
 })
 
+
+//*SEQUELİZE
+// npm i sequlize sqlite3
+
+const {Sequelize,  DataTypes} = require('sequelize')
+
+// const sequelize = new Sequelize('sqlite:./db.sqlite3')
+const sequelize = new Sequelize('sqlite:' + (processenv.SQLITE || './db.sqlite3'))
+
 // continue from here...
 
 const errorHandler = (err, req, res, next) => {
