@@ -97,7 +97,10 @@ router.get('/', async(req, res) =>{
 //     where: {priority: -1}
 // })
 
-const data = await Todo.findAndCountAll()
+const data = await Todo.findAndCountAll({
+   where:{ "title": "Todo title-1"},
+
+})
 
 
 res.status(200).send({
@@ -125,6 +128,27 @@ router.post('/' , async(req, res) =>{
 
     // })
 })
+
+router.get('/:id', async (req, res) => {
+    // const data = await Todo.findOne({
+    //     where: { id: req.params.id }
+    // })
+    const data = await Todo.findByPk(req.params.id)
+    res.status(200).send({
+        error: false,
+        data
+    })
+})
+
+
+
+
+
+
+
+
+
+
 
 
 
