@@ -140,7 +140,60 @@ router.get('/:id', async (req, res) => {
     })
 })
 
+router.update('/:id', async (req, res) => {
 
+    // const data = await Todo.update({ ...newData }, { ...where })
+    const data = await Todo.update(req.body, { where: { id: req.params.id }})
+    // upsert: kayıt varsa güncelle, yoksa ekle
+
+    // res.status(202).send({
+    //     error: false,
+    //     result: data, // kaç adet güncellendi bilgisi döner.
+    //     message: 'Updated',
+    //     new: await Todo.findByPk(req.params.id)
+    // })
+
+    res.status(202).send({
+        error: false,
+        result: await Todo.findByPk(req.params.id),
+        message: 'Updated',
+        count: data
+    })
+
+}),
+
+
+
+router.delete('/:id', async (req, res) => {
+
+    // const data = await Todo.destroy({ ...where })
+    const data = await Todo.destroy({ where: { id: req.params.id } })
+
+    // 204: No Content -> İçerik vermeyebilir.
+    // res.status(204).send({
+    //     error: false,
+    //     message: 'Deleted',
+    //     count: data
+    // })
+
+    if (data > 0) { // kayıt silindiyse...
+        
+        res.sendStatus(204)
+
+    } else { // silinemediyse...
+
+        // res.status(404).send({
+        //     error: true,
+        //     message: 'Can not Deleted. (Maybe Already deleted)'
+        // })
+
+        // send to ErrorHandler:
+        res.errorStatusCode = 404
+        throw new Error('Can not Deleted. (Maybe Already deleted)')
+
+    }
+
+}),
 
 
 
