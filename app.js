@@ -140,7 +140,7 @@ router.get('/:id', async (req, res) => {
     })
 })
 
-router.update('/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
 
     // const data = await Todo.update({ ...newData }, { ...where })
     const data = await Todo.update(req.body, { where: { id: req.params.id }})
